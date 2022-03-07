@@ -33,10 +33,17 @@ class Array
 #   [[1] 2 3 [4,5,6]]
 #   [1 [2 3] [4,5,6]]
   def my_flatten
-    return [self[0]] if !self[0].is_a?(Array)
-    return self[0] if self.length == 0
-    p "#{self[0]}  #{self[1..-1]}"
-    self[0].my_flatten + self[1..-1].my_flatten
+    if self[0].length == 1 
+      self
+    else
+      self.my_flatten
+    end
+
+  
+    
+  #   return self if self.length == 1
+  #   var1 = self[0].is_a?(Integer) ? [self[0]] : self[0].my_flatten
+  #   var1 + self[1..-1].my_flatten
   end
 end
 
