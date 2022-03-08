@@ -223,4 +223,7 @@ p arr.my_map {|val| val+1}
 # ```
 
 def concatenate(strings)
+  strings.inject { |acc, el| acc += el }
 end
+
+p concatenate(["Yay ", "for ", "strings!"])
