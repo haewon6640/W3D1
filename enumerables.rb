@@ -57,13 +57,14 @@ class Array
   end
 
   def my_rotate(num=1)
-    newArr = self
+    array = Array.new(0)
+    self.each_with_index {|char,i| array[i] = char}
     abs = num.abs
-    abs.times { rotate(newArr, num) }
-    newArr
+    abs.times { rotate(array,num) }
+    array
   end
-
-  def rotate(array, num)
+  
+  def rotate(array,num)
     if num > 0 
       first = array.shift
       array.push(first)
@@ -72,14 +73,37 @@ class Array
       array.unshift(last) 
     end
   end
+
+  def my_join(separator = "")
+    str = ""
+    self.each do |val|
+      str << val + separator
+    end
+    separator == "" ? str : str[0...-1] 
+  end
+
+  def my_reverse
+    newArr = Array.new(0)
+    i = 0
+    while i < self.length do 
+      newArr << self[self.length-i-1]
+      i += 1 
+    end    
+    newArr
+  end
 end
 
+p [ "a", "b", "c" ].my_reverse   #=> ["c", "b", "a"]
+p [ 1 ].my_reverse               #=> [1]
+# a = [ "a", "b", "c", "d" ]
+# p a.my_join         # => "abcd"
+# p a.my_join("$")    # => "a$b$c$d"
 
-a = [ "a", "b", "c", "d" ]
-p a.my_rotate         #=> ["b", "c", "d", "a"]
-p a.my_rotate(2)      #=> ["c", "d", "a", "b"]
-p a.my_rotate(-3)     #=> ["b", "c", "d", "a"]
-p a.my_rotate(15)     #=> ["d", "a", "b", "c"]
+# a = [ "a", "b", "c", "d" ]
+# p a.my_rotate         #=> ["b", "c", "d", "a"]
+# p a.my_rotate(2)      #=> ["c", "d", "a", "b"]
+# p a.my_rotate(-3)     #=> ["b", "c", "d", "a"]
+# p a.my_rotate(15)     #=> ["d", "a", "b", "c"]
 
 # a = [ 4, 5, 6 ]
 # b = [ 7, 8, 9 ]
