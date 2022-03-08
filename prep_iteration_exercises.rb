@@ -57,24 +57,41 @@ end
 class Array
   def bubble_sort!(&prc)
     sorted = false
-    while sorted == false do
+    
+    while !sorted do
       sorted = true
-      self.each_with_index do |val,i|
-        if i < self.length-1 && prc.call(val, self[i+1]) > 0
+      
+      (0...self.length-1).each do |i|
+        if prc.call(self[i], self[i+1]) > 0
           self[i], self[i+1] = self[i+1], self[i]
           sorted = false
         end
       end
+    
     end
     self
   end
 
   def bubble_sort(&prc)
+    array = self.dup
+    sorted = false
     
+    while !sorted do
+      sorted = true
+      
+      (0...array.length-1).each do |i|
+        if prc.call(array[i], array[i+1]) > 0
+          array[i], array[i+1] = array[i+1], array[i]
+          sorted = false
+        end
+      end
+    
+    end
+    array
   end
 end
-p [1, 3, 5].bubble_sort! { |num1, num2| num1 <=> num2 } #sort ascending
-p [1, 3, 5].bubble_sort! { |num1, num2| num2 <=> num1 } #sort descending 
+# p [1, 3, 5].bubble_sort { |num1, num2| num1 <=> num2 } #sort ascending
+# p [1, 3, 5].bubble_sort { |num1, num2| num2 <=> num1 } #sort descending 
 
 # ### Substrings and Subwords
 #
@@ -90,10 +107,24 @@ p [1, 3, 5].bubble_sort! { |num1, num2| num2 <=> num1 } #sort descending
 # words).
 
 def substrings(string)
+  result = Array.new
+  (0...string.length).each do |i|
+    (i...string.length).each do |j|
+      result << string[i..j]
+    end
+  end 
+  result
 end
 
+p substrings("cat") # => ["c", "ca", "cat", "a", "at", "t"]`.
+
 def subwords(word, dictionary)
+  
 end
+
+array = substrings("cat")
+array.each { |el| p subwords(el , ["a","at","cat"]) }
+
 
 # ### Doubler
 # Write a `doubler` method that takes an array of integers and returns an
