@@ -116,22 +116,24 @@ def substrings(string)
   result
 end
 
-p substrings("cat") # => ["c", "ca", "cat", "a", "at", "t"]`.
+# p substrings("cat") # => ["c", "ca", "cat", "a", "at", "t"]`.
 
 def subwords(word, dictionary)
-  
+   newArr = substrings(word)
+   newArr.select {|val| dictionary.include?(val)} 
 end
 
-array = substrings("cat")
-array.each { |el| p subwords(el , ["a","at","cat"]) }
-
+p subwords("cat",["a","t","at"])
 
 # ### Doubler
 # Write a `doubler` method that takes an array of integers and returns an
 # array with the original elements multiplied by two.
 
 def doubler(array)
+  array.map {|val| val*2}
 end
+
+# p doubler([2,3,5,7])
 
 # ### My Each
 # Extend the Array class to include a method named `my_each` that takes a
@@ -158,6 +160,12 @@ end
 
 class Array
   def my_each(&prc)
+    i = 0
+    while i < self.length do
+      prc.call(self[i])
+      i += 1
+    end
+    self
   end
 end
 
@@ -175,15 +183,35 @@ end
 #   `my_inject`. Again, do not modify the original array.
 
 class Array
+  
   def my_map(&prc)
+    newArr = Array.new(0)
+    
+    self.my_each do |val|
+      newArr << prc.call(val)
+    end
+
+    newArr
   end
 
   def my_select(&prc)
+    newArr = []
+    self.my_each { |val| newArr << val if prc.call(val) }
+    newArr
   end
 
   def my_inject(&blk)
+    
+    self.my_each do |val|
+      
+      prc.call()
+    end
+    
   end
 end
+
+arr = [2,4,5]
+p arr.my_map {|val| val+1}
 
 # ### Concatenate
 # Create a method that takes in an `Array` of `String`s and uses `inject`
