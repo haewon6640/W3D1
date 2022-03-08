@@ -32,18 +32,17 @@ class Array
   end
 #   [[1] 2 3 [4,5,6]]
 #   [1 [2 3] [4,5,6]]
+# [1, 2, 3, [4, [5, 6]], [[[7]], 8]]
   def my_flatten
-    if self[0].length == 1 
-      self
-    else
-      self.my_flatten
+    newArr = Array.new(0)
+    self.each do |val|
+      if val.is_a?(Integer)
+        newArr << val
+      else
+        newArr += val.my_flatten
+      end
     end
-
-  
-    
-  #   return self if self.length == 1
-  #   var1 = self[0].is_a?(Integer) ? [self[0]] : self[0].my_flatten
-  #   var1 + self[1..-1].my_flatten
+    newArr
   end
 end
 
